@@ -15,9 +15,9 @@ app.use(express.static("public"))
 app.use("/", indexRouter)
 
 const mongoose = require("mongoose")
-
+const mongooseURI = "mongodb+srv://ziamohsin409:NfknfSa7x4zJ9LH7@mybrary.7x6n8s6.mongodb.net/?retryWrites=true&w=majority"
 function connectMongo() {
-    mongoose.connect(process.env.DATABASE_URL, {
+    mongoose.connect(mongooseURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
