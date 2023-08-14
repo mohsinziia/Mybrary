@@ -34,6 +34,8 @@ async function getObject() {
 
 const addedObject = addObject()
 const gettedObject = getObject()
+console.log(addedObject)
+console.log(gettedObject)
 
 // All Books Route
 router.get("/", async (req, res) => {
@@ -88,9 +90,9 @@ router.post('/', upload.single('cover'), async (req, res) => {
 })
 
 function removeBookCover(fileName) {
-    fs.unlink(path.join(uploadPath, fileName), err => {
-        if (err) console.error(err);
-    })
+    // fs.unlink(path.join(uploadPath, fileName), err => {
+    //     if (err) console.error(err);
+    // })
 }
 
 async function renderNewPage(res, book, hasError = true) {
