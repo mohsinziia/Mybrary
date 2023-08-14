@@ -14,6 +14,27 @@ const upload = multer({
     }
 })
 
+// my code
+const AWS = require('aws-sdk')
+const s3 = new AWS.S3()
+async function addObject() {
+    return await s3.putObject({
+        Body: JSON.stringify({key:'value'}),
+        Bucket: process.env.CYCLIC_BUCKET_NAME,
+        Key: "some_files/my_file.json",
+    }).promise()
+}
+
+async function getObject() {
+    return await s3.getObject({
+        Bucket: process.env.CYCLIC_BUCKET_NAME,
+        Key: "some_files/my_file.json",
+    }).promise()
+}
+
+const addedObject = addObject()
+const gettedObject = getObject()
+
 // All Books Route
 router.get("/", async (req, res) => {
     let query = Book.find()
