@@ -8,6 +8,8 @@ const Book = require('../models/book')
 const Author = require('../models/author')
 const uploadPath = path.join('public', Book.coverImageBasePath)
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
+const AWS = require('aws-sdk')
+const s3 = new AWS.S3()
 const upload = multer({
     storage: multerS3({
         s3: s3,
