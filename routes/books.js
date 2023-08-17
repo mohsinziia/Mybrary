@@ -13,6 +13,7 @@ const s3 = new AWS.S3()
 
 
 const bucketPolicyParams = {
+    Version: '2012-10-17',
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Policy: JSON.stringify({
       Statement: [
