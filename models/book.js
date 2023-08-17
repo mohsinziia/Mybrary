@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const path = require('path')
-
-const coverImageBasePath = 's3fs'
+let coverImageBasePath = `https://${process.env.CYCLIC_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com`
 
 const bookSchema = new mongoose.Schema({
     title: {

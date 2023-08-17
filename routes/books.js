@@ -16,7 +16,7 @@ const upload = multer({
         bucket: process.env.CYCLIC_BUCKET_NAME,
         // acl: 'public-read',
         key: (req, file, cb) => {
-          cb(null, Date.now().toString() + '-' + file.originalname);
+          cb(null, file.originalname);
         }
     }),
     // dest: uploadPath,
