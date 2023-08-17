@@ -8,7 +8,14 @@ const expressLayouts = require("express-ejs-layouts")
 const indexRouter = require("./routes/index")
 const authorRouter = require("./routes/authors")
 const bookRouter = require('./routes/books')
+const AWS = require('aws-sdk')
 
+const SESConfig = {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    accessSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+}
+AWS.config.update(SESConfig)
 app.set("view engine", "ejs")
 app.set("views", __dirname + "/views")
 app.set("layout", "layouts/layout")
