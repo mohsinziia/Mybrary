@@ -10,6 +10,31 @@ const uploadPath = path.join('public', Book.coverImageBasePath)
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
+
+
+const bucketPolicyParams = {
+    Bucket: process.env.CYCLIC_BUCKET_NAME,
+    Policy: JSON.stringify({
+      Statement: [
+        {
+          Sid: 'PublicReadGetObject',
+          Effect: 'Allow',
+          Principal: '*',
+          Action: ['s3:GetObject'],
+          Resource: [`arn:aws:s3:::${process.env.CYCLIC_BUCKET_NAME}/*`],
+        },
+      ],
+    }),
+};
+
+s3.putBucketPolicy(bucketPolicyParams, (err, data) => {
+    if (err) {
+      console.error('Error:', err);
+    } else {
+      console.log('Bucket policy created:', data);
+    }
+});
+
 const upload = multer({
     storage: multerS3({
         s3: s3,
