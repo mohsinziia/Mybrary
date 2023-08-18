@@ -1,20 +1,25 @@
 const express = require("express")
 const router = express.Router()
+
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+const bucketName = process.env.CYCLIC_BUCKET_NAME
+
 const path = require('path')
-const fs = require('@cyclic.sh/s3fs')(process.env.CYCLIC_BUCKET_NAME)
+const fs = require('@cyclic.sh/s3fs')(bucketName)
+
 const Book = require('../models/book')
 const Author = require('../models/author')
+
 const uploadPath = path.join('public', Book.coverImageBasePath)
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
+
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
 
 
 const bucketPolicyParams = {
-    Version: '2012-10-17',
-    Bucket: process.env.CYCLIC_BUCKET_NAME,
+    Bucket: bucketName,
     Policy: JSON.stringify({
       Statement: [
         {
@@ -22,7 +27,7 @@ const bucketPolicyParams = {
           Effect: 'Allow',
           Principal: '*',
           Action: ['s3:GetObject'],
-          Resource: [`arn:aws:s3:::${process.env.CYCLIC_BUCKET_NAME}/*`],
+          Resource: [`arn:aws:s3:::${bucketName}/*`],
         },
       ],
     }),
@@ -35,6 +40,14 @@ s3.putBucketPolicy(bucketPolicyParams, (err, data) => {
       console.log('Bucket policy created:', data);
     }
 });
+
+s3.getBucketPolicy(params, (err, data)) {
+    if (err) {
+        console.error('Error listing bucket policies:', err)
+    } else {
+        console.log('Bucket policies:', data.Policy)
+    }
+}
 
 const upload = multer({
     storage: multerS3({
