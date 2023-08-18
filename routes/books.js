@@ -91,6 +91,7 @@ router.post('/', upload.single('cover'), async (req, res) => {
         coverImageName: fileName,
         description: req.body.description
     })
+    console.log(book)
     
     try {
         const newBook = await book.save()
