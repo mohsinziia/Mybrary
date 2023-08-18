@@ -41,7 +41,7 @@ s3.putBucketPolicy(bucketPolicyParams, (err, data) => {
     }
 });
 
-s3.getBucketPolicy(params, (err, data) => {
+s3.getBucketPolicy(bucketPolicyParams, (err, data) => {
     if (err) {
         console.error('Error listing bucket policies:', err)
     } else {
