@@ -41,13 +41,13 @@ s3.putBucketPolicy(bucketPolicyParams, (err, data) => {
     }
 });
 
-s3.getBucketPolicy(params, (err, data)) {
+s3.getBucketPolicy(params, (err, data) => {
     if (err) {
         console.error('Error listing bucket policies:', err)
     } else {
         console.log('Bucket policies:', data.Policy)
     }
-}
+})
 
 const upload = multer({
     storage: multerS3({
